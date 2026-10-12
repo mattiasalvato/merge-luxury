@@ -1,0 +1,70 @@
+---
+interface Story {
+  image: string;
+  title: string;
+  description: string;
+  linkText: string;
+  href: string;
+}
+
+const stories: Story[] = [
+  {
+    image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=900&auto=format&fit=crop&q=85",
+    title: "Into the wild",
+    description: "La texture animalier e le finiture artigianali guidano i codici espressivi di stagione.",
+    linkText: "Shop now",
+    href: "#catalogo",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=900&auto=format&fit=crop&q=85",
+    title: "The main event",
+    description: "L'eleganza rigorosa della scarpa sartoriale al centro del guardaroba serale.",
+    linkText: "Shop the edit",
+    href: "#catalogo",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900&auto=format&fit=crop&q=85",
+    title: "The satin silhouette",
+    description: "Riflessi di luce e satin per elevare la silhouette oltre i canoni consueti.",
+    linkText: "Shop the edit",
+    href: "#catalogo",
+  },
+];
+---
+
+<section class="max-w-7xl mx-auto px-6 sm:px-12 py-16 sm:py-24">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
+    {stories.map((story) => (
+      <article class="flex flex-col group">
+        <a href={story.href} class="block aspect-[3/4] overflow-hidden bg-[#ECE8E1]">
+          <img 
+            src={story.image} 
+            alt={story.title} 
+            loading="lazy"
+            class="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+          />
+        </a>
+
+        <div class="pt-5 space-y-1.5 flex-1 flex flex-col justify-between">
+          <div>
+            <h3 class="font-serif text-xl sm:text-2xl text-stone-900 font-medium">
+              {story.title}
+            </h3>
+            <p class="text-xs text-stone-600 font-light leading-relaxed mt-1 line-clamp-2">
+              {story.description}
+            </p>
+          </div>
+
+          <div class="pt-3">
+            <a 
+              href={story.href} 
+              class="inline-block text-[10px] tracking-[0.2em] uppercase font-semibold text-stone-950 underline underline-offset-4 decoration-stone-400 hover:decoration-stone-950 transition-colors"
+            >
+              {story.linkText}
+            </a>
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>

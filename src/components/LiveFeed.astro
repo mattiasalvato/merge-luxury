@@ -1,0 +1,102 @@
+---
+interface LiveActivity {
+  brand: string;
+  user: string;
+  action: "Added to Bag" | "Added to Wish List";
+  location: string;
+  image: string;
+}
+
+const activities: LiveActivity[] = [
+  {
+    brand: "GUCCI",
+    user: "Marina",
+    action: "Added to Bag",
+    location: "IT",
+    image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&auto=format&fit=crop&q=80",
+  },
+  {
+    brand: "NILI LOTAN",
+    user: "Camille",
+    action: "Added to Bag",
+    location: "JACKSON, US",
+    image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop&q=80",
+  },
+  {
+    brand: "MOTHER",
+    user: "Petra",
+    action: "Added to Bag",
+    location: "GELSENKIRCHEN, DE",
+    image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&auto=format&fit=crop&q=80",
+  },
+  {
+    brand: "GUCCI",
+    user: "Samantha",
+    action: "Added to Bag",
+    location: "US",
+    image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600&auto=format&fit=crop&q=80",
+  },
+  {
+    brand: "BERNADETTE",
+    user: "Deborah",
+    action: "Added to Bag",
+    location: "US",
+    image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&auto=format&fit=crop&q=80",
+  },
+  {
+    brand: "BURBERRY",
+    user: "Sally",
+    action: "Added to Wish List",
+    location: "LONDON, GB",
+    image: "https://images.unsplash.com/photo-1515347619252-60a4bf4fff4f?w=600&auto=format&fit=crop&q=80",
+  },
+];
+---
+
+<section class="max-w-7xl mx-auto px-6 sm:px-12 py-20 lg:py-24 border-t border-stone-200/60">
+  <!-- Header Net-a-Porter Live -->
+  <div class="text-center space-y-1.5 pb-12 sm:pb-16">
+    <h2 class="font-serif text-3xl sm:text-4xl tracking-[0.12em] text-stone-900 uppercase">
+      Merge <span class="font-serif italic font-normal lowercase">Live</span>
+    </h2>
+    <p class="text-[9px] tracking-[0.3em] uppercase text-stone-500 font-sans font-medium">
+      16,845 Shoppers Online
+    </p>
+    <p class="font-serif italic text-xs text-stone-600 pt-1">
+      Showcasing what the world's most stylish people are buying right now
+    </p>
+  </div>
+
+  <!-- Nastro a 6 Colonne: Stesse Dimensioni e Proporzioni per Ogni Box -->
+  <div class="flex lg:grid lg:grid-cols-6 gap-4 sm:gap-6 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 snap-x snap-mandatory no-scrollbar -mx-6 px-6 lg:mx-0 lg:px-0">
+    {activities.map((item) => (
+      <div class="flex flex-col text-center min-w-[145px] max-w-[170px] lg:min-w-0 lg:max-w-none shrink-0 lg:shrink snap-start group cursor-pointer">
+        <!-- Box Prodotto Rigidamente Uniforme (3:4) con Sfondo Neutro Chiaro -->
+        <div class="aspect-[3/4] w-full bg-[#ECE9E2] overflow-hidden flex items-center justify-center p-3 relative">
+          <img 
+            src={item.image} 
+            alt={item.brand} 
+            loading="lazy"
+            class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+          />
+        </div>
+
+        <!-- Dati Shopper Allineati (Stile Net-a-Porter) -->
+        <div class="pt-3.5 space-y-0.5">
+          <span class="block text-[10px] tracking-[0.2em] font-sans font-semibold text-stone-900 uppercase">
+            {item.brand}
+          </span>
+          <span class="block text-[11px] text-stone-600 font-light">
+            {item.user}
+          </span>
+          <span class="block text-[9px] text-stone-500 font-light">
+            {item.action}
+          </span>
+          <span class="block text-[9px] tracking-[0.12em] text-stone-500 font-sans uppercase pt-0.5">
+            {item.location}
+          </span>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

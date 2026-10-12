@@ -1,0 +1,263 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import productsData from '../../data/products.json';
+
+export function getStaticPaths() {
+  return productsData.map((prod) => ({
+    params: { slug: prod.slug },
+    props: { product: prod },
+  }));
+}
+
+const { product } = Astro.props;
+
+// Mock di immagini secondarie per la galleria se non presenti nel JSON
+const galleryImages = [
+  product.image,
+  "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=1000&auto=format&fit=crop&q=85",
+  "https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=1000&auto=format&fit=crop&q=85",
+];
+
+const relatedItems = productsData.filter((p) => p.id !== product.id).slice(0, 4);
+const price = product.sale_price ?? product.regular_price;
+---
+
+<BaseLayout title={`${product.name} | Merge Luxury`}>
+  <div class="pt-24 sm:pt-28 pb-20 max-w-7xl mx-auto px-6 sm:px-12">
+    
+    <!-- Breadcrumb essenziale minimal -->
+    <nav class="text-[10px] tracking-[0.2em] uppercase text-stone-500 font-sans pb-8 flex items-center gap-2">
+      <a href="/" class="hover:text-stone-900 transition">Home</a>
+      <span>/</span>
+      <a href="/#catalogo" class="hover:text-stone-900 transition">{product.category}</a>
+      <span>/</span>
+      <span class="text-stone-900 font-medium truncate">{product.name}</span>
+    </nav>
+
+    <!-- Layout Scheda Prodotto Luxury (Galleria a sinistra, Dettagli Sticky a destra) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+      
+      <!-- 1. Galleria Immagini (Verticale/Scrollabile stile Net-a-Porter) -->
+      <div class="lg:col-span-7 flex flex-col space-y-4">
+        {galleryImages.map((imgUrl, idx) => (
+          <div class="aspect-[3/4] w-full bg-[#EFECE6] overflow-hidden flex items-center justify-center p-4">
+            <img 
+              src={imgUrl} 
+              alt={`${product.name} vista ${idx + 1}`} 
+              class="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
+              loading={idx === 0 ? "eager" : "lazy"}
+            />
+          </div>
+        ))}
+      </div>
+
+      <!-- 2. Pannello Dettagli Prodotto (Sticky su Desktop) -->
+      <div class="lg:col-span-5 lg:sticky lg:top-28 space-y-6">
+        
+        <!-- Intestazione -->
+        <div class="space-y-1.5 border-b border-stone-200/70 pb-6">
+          <span class="text-[10px] tracking-[0.3em] uppercase font-sans font-semibold text-stone-500">
+            MERGE ATELIER
+          </span>
+          <h1 class="font-serif text-3xl sm:text-4xl text-stone-900 font-normal tracking-tight">
+            {product.name}
+          </h1>
+          <p class="font-serif text-lg text-stone-800 pt-2">
+            €{price.toFixed(2)}
+          </p>
+          <span class="block text-[10px] text-stone-500 font-light tracking-wide">
+            Tasse e dazi doganali inclusi &middot; Spedizione gratuita
+          </span>
+        </div>
+
+        <!-- Descrizione Sintetica -->
+        <p class="text-xs sm:text-sm text-stone-600 font-light leading-relaxed">
+          {product.short_description || "Realizzata a mano in Italia con pellame di prima scelta lavorato a concia naturale. La silhouette affusolata unisce una calzata confortevole al rigore sartoriale della manifattura d'archivio."}
+        </p>
+
+        <!-- Selettore Taglia -->
+        <div class="space-y-3 pt-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-[10px] tracking-[0.2em] uppercase font-medium text-stone-900">
+              Seleziona Taglia (IT/EU)
+            </span>
+            <button 
+              type="button" 
+              onclick="alert('Guida taglie: La calzata è regolare. Consigliamo di ordinare la propria misura abituale.')"
+              class="text-[10px] tracking-[0.15em] uppercase text-stone-500 underline underline-offset-4 hover:text-stone-900 transition cursor-pointer"
+            >
+              Guida alle taglie
+            </button>
+          </div>
+
+          <!-- Bottoni Taglie -->
+          <div class="grid grid-cols-4 sm:grid-cols-6 gap-2" id="size-selector">
+            {(product.sizes || [39, 40, 41, 42, 43, 44]).map((sz: number, idx: number) => (
+              <button
+                type="button"
+                data-size={sz}
+                class={`size-btn py-3 border text-xs font-mono transition cursor-pointer ${
+                  idx === 1 
+                    ? 'border-stone-950 bg-stone-950 text-white' 
+                    : 'border-stone-300 hover:border-stone-900 text-stone-800 bg-white'
+                }`}
+              >
+                {sz}
+              </button>
+            ))}
+          </div>
+          <p id="size-selected-label" class="text-[11px] text-stone-500 font-light pt-1">
+            Taglia selezionata: <span class="font-medium text-stone-900" id="current-size-val">40 IT</span>
+          </p>
+        </div>
+
+        <!-- Azione: Add to Bag -->
+        <div class="pt-4 space-y-3">
+          <button
+            id="add-to-bag-btn"
+            data-id={product.id}
+            data-name={product.name}
+            data-price={price}
+            data-image={product.image}
+            class="w-full bg-stone-950 hover:bg-stone-800 text-white text-[11px] font-medium tracking-[0.25em] uppercase py-4.5 rounded-none transition-colors duration-300 cursor-pointer shadow-sm active:scale-[0.99]"
+          >
+            Aggiungi alla Shopping Bag
+          </button>
+
+          <button
+            type="button"
+            onclick="alert('Aggiunto alla Wish List')"
+            class="w-full border border-stone-300 hover:border-stone-900 text-stone-800 text-[10px] font-medium tracking-[0.2em] uppercase py-3.5 rounded-none transition-colors duration-300 cursor-pointer text-center"
+          >
+            Aggiungi alla Wish List
+          </button>
+        </div>
+
+        <!-- Accordion Dettagli Sartoriali, Materiali & Cura -->
+        <div class="border-t border-stone-200/80 pt-4 divide-y divide-stone-200/60 text-xs">
+          <details class="py-3.5 group cursor-pointer" open>
+            <summary class="flex justify-between items-center font-medium uppercase tracking-[0.18em] text-[10px] text-stone-900 list-none">
+              Composizione & Manifattura
+              <span class="text-stone-400 group-open:rotate-45 transition-transform duration-200 text-sm font-mono">+</span>
+            </summary>
+            <div class="pt-3 text-stone-600 font-light leading-relaxed space-y-1">
+              <p>&bull; 100% Pregiato pellame di vitello italiano con finitura satinata</p>
+              <p>&bull; Fodera interna in morbida pelle nappa traspirante</p>
+              <p>&bull; Guardolo cucito a mano e suola in vero cuoio rigenerato</p>
+              <p>&bull; Prodotto interamente negli atelier toscani</p>
+            </div>
+          </details>
+
+          <details class="py-3.5 group cursor-pointer">
+            <summary class="flex justify-between items-center font-medium uppercase tracking-[0.18em] text-[10px] text-stone-900 list-none">
+              Spedizione & Reso Gratuito
+              <span class="text-stone-400 group-open:rotate-45 transition-transform duration-200 text-sm font-mono">+</span>
+            </summary>
+            <div class="pt-3 text-stone-600 font-light leading-relaxed space-y-1">
+              <p>Consegna espressa garantita in 24/48 ore in packaging rigido protettivo firmato Merge.</p>
+              <p>Reso e cambio taglia gratuiti disponibili entro 28 giorni dalla consegna.</p>
+            </div>
+          </details>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- 3. Sezione "Completa il Look / Raccomandati" -->
+    <section class="mt-28 border-t border-stone-200/70 pt-16">
+      <div class="text-center space-y-1 pb-10">
+        <span class="text-[9px] tracking-[0.3em] uppercase text-stone-500 font-mono">Curated Selection</span>
+        <h2 class="font-serif text-2xl sm:text-3xl text-stone-900 font-normal">Potrebbe piacerti anche</h2>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
+        {relatedItems.map((rel) => (
+          <a href={`/products/${rel.slug}`} class="group flex flex-col text-center">
+            <div class="aspect-[3/4] w-full bg-[#EFECE6] overflow-hidden flex items-center justify-center p-3 relative">
+              <img 
+                src={rel.image} 
+                alt={rel.name} 
+                loading="lazy" 
+                class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+            <div class="pt-3.5 space-y-0.5">
+              <span class="block text-[9px] tracking-[0.2em] uppercase font-semibold text-stone-900">
+                MERGE
+              </span>
+              <span class="block text-[11px] text-stone-500 font-light truncate">
+                {rel.name}
+              </span>
+              <span class="block text-xs font-serif text-stone-800 pt-0.5">
+                €{(rel.sale_price ?? rel.regular_price).toFixed(2)}
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+  </div>
+</BaseLayout>
+
+<script>
+  let selectedSize = 40;
+  const sizeBtns = document.querySelectorAll<HTMLButtonElement>('.size-btn');
+  const sizeLabel = document.getElementById('current-size-val');
+  const buyBtn = document.getElementById('add-to-bag-btn');
+
+  // Gestione click selezione taglia
+  sizeBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      sizeBtns.forEach((b) => {
+        b.className = 'size-btn py-3 border text-xs font-mono transition cursor-pointer border-stone-300 hover:border-stone-900 text-stone-800 bg-white';
+      });
+      btn.className = 'size-btn py-3 border text-xs font-mono transition cursor-pointer border-stone-950 bg-stone-950 text-white';
+
+      const s = Number(btn.getAttribute('data-size'));
+      selectedSize = s;
+      if (sizeLabel) sizeLabel.textContent = `${s} IT`;
+    });
+  });
+
+  // Aggiunta alla Shopping Bag nel localStorage
+  buyBtn?.addEventListener('click', () => {
+    const id = buyBtn.getAttribute('data-id') || 'item';
+    const name = buyBtn.getAttribute('data-name') || 'Scarpa Sartoriale';
+    const price = Number(buyBtn.getAttribute('data-price')) || 0;
+    const image = buyBtn.getAttribute('data-image') || '';
+
+    const cartKey = 'cart';
+    const cart = JSON.parse(localStorage.getItem(cartKey) || '[]');
+    const cartItemId = `${id}-${selectedSize}`;
+    
+    const existingIndex = cart.findIndex((i: any) => i.cartItemId === cartItemId);
+
+    if (existingIndex > -1) {
+      cart[existingIndex].qty += 1;
+    } else {
+      cart.push({
+        cartItemId,
+        id,
+        name,
+        price,
+        size: selectedSize,
+        image,
+        qty: 1,
+      });
+    }
+
+    localStorage.setItem(cartKey, JSON.stringify(cart));
+    window.dispatchEvent(new Event('cart-updated'));
+
+    // Feedback visivo sul bottone
+    const originalText = buyBtn.textContent;
+    buyBtn.textContent = 'Aggiunto alla Bag ✓';
+    buyBtn.classList.add('bg-stone-800');
+    setTimeout(() => {
+      buyBtn.textContent = originalText;
+      buyBtn.classList.remove('bg-stone-800');
+    }, 1500);
+  });
+</script>

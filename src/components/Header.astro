@@ -1,0 +1,170 @@
+---
+const navLinks = [
+  { label: 'Collezioni', href: '#catalogo' },
+  { label: 'Uomo', href: '#catalogo' },
+  { label: 'Donna', href: '#catalogo' },
+  { label: 'Atelier & Pellami', href: '#heritage' },
+];
+---
+
+<!-- Header Base -->
+<header id="main-header" class="fixed top-0 inset-x-0 z-50 bg-[#121110] border-b border-white/10 text-white transition-all">
+  <div class="max-w-7xl mx-auto px-6 sm:px-12 h-20 flex items-center justify-between">
+    
+    <!-- Logo Brand -->
+    <a href="/" class="flex flex-col group text-left relative" style="z-index: 100001;">
+      <span class="font-serif text-xl sm:text-2xl tracking-[0.28em] font-medium text-white uppercase group-hover:text-amber-100 transition-colors">
+        Merge
+      </span>
+      <span class="text-[9px] tracking-[0.45em] text-stone-400 uppercase font-sans -mt-1 font-light">
+        Luxury Footwear
+      </span>
+    </a>
+
+    <!-- Navigazione Desktop -->
+    <nav class="hidden md:flex items-center gap-8 lg:gap-10">
+      {navLinks.map((item) => (
+        <a 
+          href={item.href} 
+          class="text-[11px] uppercase tracking-[0.25em] text-stone-300 hover:text-white transition-colors duration-200 relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-[1px] after:bg-amber-200/80 hover:after:w-full after:transition-all after:duration-300"
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Azioni Destra -->
+    <div class="flex items-center gap-4 sm:gap-6 text-stone-300 relative" style="z-index: 100001;">
+      <button aria-label="Cerca" class="hover:text-white transition p-1 cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 stroke-[1.25]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <circle cx="11" cy="11" r="7" />
+          <path stroke-linecap="round" d="m20 20-3.5-3.5" />
+        </svg>
+      </button>
+
+      <button aria-label="Account" class="hover:text-white transition p-1 hidden sm:block cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 stroke-[1.25]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" d="M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0ZM12 14a7 7 0 0 0-7 7h14a7 7 0 0 0-7-7Z" />
+        </svg>
+      </button>
+
+      <!-- Carrello -->
+      <button id="header-cart-btn" aria-label="Shopping Bag" class="hover:text-white transition relative p-1 cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 stroke-[1.25]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z" />
+        </svg>
+        <span id="cart-badge-count" class="absolute -top-1 -right-2 w-4 h-4 rounded-full bg-amber-100 text-stone-950 text-[9px] font-bold flex items-center justify-center">
+          0
+        </span>
+      </button>
+
+      <!-- Toggle Menu Mobile -->
+      <button 
+        id="mobile-nav-toggle" 
+        aria-label="Apri menu" 
+        class="md:hidden p-1.5 text-stone-300 hover:text-white transition cursor-pointer"
+      >
+        <svg id="icon-burger" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-[1.25]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 7.5h16.5M3.75 12h16.5m-16.5 4.5h16.5" />
+        </svg>
+        <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-[1.25] hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- MENU MOBILE FULL-SCREEN (Stili forzati per overlay scuro opaco garantito) -->
+  <div 
+    id="mobile-nav-fullscreen" 
+    class="fixed inset-0 text-stone-100 flex flex-col justify-between px-8 pt-28 pb-12 transition-all duration-300 ease-in-out md:hidden overflow-y-auto"
+    style="display: none; background-color: #0e0d0c; z-index: 100000;"
+  >
+    <!-- Voci di Menu -->
+    <nav class="flex flex-col space-y-6 pt-6">
+      {navLinks.map((item, idx) => (
+        <a 
+          href={item.href} 
+          class="mobile-menu-link group flex items-baseline justify-between border-b border-stone-800 pb-4"
+        >
+          <span class="font-serif text-3xl text-stone-100 group-hover:text-amber-100 font-normal tracking-wide transition-colors">
+            {item.label}
+          </span>
+          <span class="text-[11px] tracking-[0.25em] text-stone-500 font-mono">
+            0{idx + 1}
+          </span>
+        </a>
+      ))}
+    </nav>
+
+    <!-- Footer Menu Mobile -->
+    <div class="space-y-6 pt-10 border-t border-stone-800">
+      <div class="grid grid-cols-2 gap-4 text-xs">
+        <div>
+          <span class="block text-[9px] uppercase tracking-[0.3em] text-stone-500 font-mono mb-1">Assistenza Clienti</span>
+          <a href="tel:+39021234567" class="text-stone-300 font-light">+39 02 8900 120</a>
+        </div>
+        <div>
+          <span class="block text-[9px] uppercase tracking-[0.3em] text-stone-500 font-mono mb-1">Boutique</span>
+          <span class="text-stone-300 font-light">Milano &middot; Firenze</span>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between text-[10px] tracking-[0.25em] uppercase text-stone-500 pt-2 font-mono">
+        <span>Merge Luxury Footwear</span>
+        <span>Spedizioni Worldwide</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggleBtn = document.getElementById('mobile-nav-toggle');
+  const fullMenu = document.getElementById('mobile-nav-fullscreen');
+  const iconBurger = document.getElementById('icon-burger');
+  const iconClose = document.getElementById('icon-close');
+  const menuLinks = document.querySelectorAll('.mobile-menu-link');
+
+  let isOpen = false;
+
+  function setMenuState(open: boolean) {
+    isOpen = open;
+    if (isOpen) {
+      if (fullMenu) fullMenu.style.display = 'flex';
+      iconBurger?.classList.add('hidden');
+      iconClose?.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    } else {
+      if (fullMenu) fullMenu.style.display = 'none';
+      iconBurger?.classList.remove('hidden');
+      iconClose?.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+  }
+
+  toggleBtn?.addEventListener('click', () => {
+    setMenuState(!isOpen);
+  });
+
+  menuLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+      setMenuState(false);
+    });
+  });
+
+  function updateCartCount() {
+    try {
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      const count = cart.reduce((acc: number, item: any) => acc + (item.qty || 1), 0);
+      const badge = document.getElementById('cart-badge-count');
+      if (badge) {
+        badge.textContent = count.toString();
+        badge.style.display = count > 0 ? 'flex' : 'none';
+      }
+    } catch {}
+  }
+
+  window.addEventListener('DOMContentLoaded', updateCartCount);
+  window.addEventListener('cart-updated', updateCartCount);
+</script>

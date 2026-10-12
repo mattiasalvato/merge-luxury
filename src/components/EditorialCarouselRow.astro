@@ -1,0 +1,103 @@
+---
+interface Item {
+  brand: string;
+  name: string;
+  slug: string;
+  price?: number;
+  image: string;
+}
+
+interface Props {
+  counter?: string;
+  title: string;
+  description: string;
+  ctaText: string;
+  ctaHref?: string;
+  items: Item[];
+}
+
+const {
+  counter,
+  title,
+  description,
+  ctaText,
+  ctaHref = "#catalogo",
+  items,
+} = Astro.props;
+---
+
+<section class="max-w-7xl mx-auto px-6 sm:px-12 py-16 sm:py-24">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+    
+    <!-- Testo a Sinistra -->
+    <div class="lg:col-span-4 flex flex-col items-start pr-0 lg:pr-6 space-y-4">
+      {counter && (
+        <span class="text-[9px] tracking-[0.35em] text-stone-500 font-sans uppercase font-medium">
+          {counter}
+        </span>
+      )}
+      
+      <h2 class="font-serif text-3xl sm:text-4xl text-stone-900 font-normal tracking-tight">
+        {title}
+      </h2>
+
+      <p class="text-xs sm:text-sm text-stone-600 font-light leading-relaxed max-w-xs">
+        {description}
+      </p>
+
+      <div class="pt-2">
+        <a 
+          href={ctaHref}
+          class="inline-block bg-black text-white hover:bg-stone-800 text-[10px] font-medium tracking-[0.22em] uppercase px-8 py-3.5 rounded-none transition-colors duration-300"
+        >
+          {ctaText}
+        </a>
+      </div>
+    </div>
+
+    <!-- Griglia Prodotti a Destra con link esatto a /products/[slug] -->
+    <div class="lg:col-span-8 relative">
+      <div class="flex sm:grid sm:grid-cols-4 gap-4 sm:gap-6 overflow-x-auto sm:overflow-visible pb-4 sm:pb-0 snap-x snap-mandatory no-scrollbar -mx-6 px-6 sm:mx-0 sm:px-0">
+        {items.map((item) => (
+          <a 
+            href={`/products/${item.slug}`} 
+            class="group flex flex-col text-center min-w-[160px] max-w-[200px] sm:min-w-0 sm:max-w-none shrink-0 sm:shrink snap-start"
+          >
+            <!-- Box Prodotto Proporzione 3:4 Uniforme -->
+            <div class="aspect-[3/4] w-full bg-[#EFECE6] overflow-hidden flex items-center justify-center p-3 relative">
+              <img 
+                src={item.image} 
+                alt={item.name} 
+                loading="lazy"
+                class="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+              />
+            </div>
+            
+            <!-- Tipografia Card -->
+            <div class="pt-4 space-y-1">
+              <span class="block text-[10px] tracking-[0.22em] uppercase font-sans font-semibold text-stone-900 group-hover:text-stone-600 transition-colors">
+                {item.brand}
+              </span>
+              <span class="block text-[11px] text-stone-500 font-light truncate">
+                {item.name}
+              </span>
+              {item.price && (
+                <span class="block text-xs font-serif text-stone-700 pt-0.5">
+                  €{item.price.toFixed(2)}
+                </span>
+              )}
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <!-- Freccia Carosello Desktop -->
+      <div class="hidden sm:flex absolute -right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white shadow-sm border border-stone-200 items-center justify-center text-stone-700 pointer-events-none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 stroke-[1.5]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </div>
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "prod-1",
+    "name": "Derby in Vitello Spazzolato",
+    "slug": "derby-in-vitello-spazzolato",
+    "category": "Scarpe Eleganti",
+    "regular_price": 340.00,
+    "sale_price": null,
+    "short_description": "Pellame di vitello italiano con finitura satinata e guardolo cucito a mano.",
+    "image": "https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=800&auto=format&fit=crop&q=80",
+    "sizes": [39, 40, 41, 42, 43, 44],
+    "in_stock": true
+  },
+  {
+    "id": "prod-2",
+    "name": "Mocassino Penny Soft Leather",
+    "slug": "mocassino-penny-soft-leather",
+    "category": "Mocassini",
+    "regular_price": 620.00,
+    "sale_price": null,
+    "short_description": "Calzata avvolgente in morbida pelle nappa con suola flessibile in cuoio.",
+    "image": "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&auto=format&fit=crop&q=80",
+    "sizes": [40, 41, 42, 43, 44],
+    "in_stock": true
+  },
+  {
+    "id": "prod-3",
+    "name": "Stivaletto Western Tacco Basso",
+    "slug": "stivaletto-western-tacco-basso",
+    "category": "Stivali",
+    "regular_price": 810.00,
+    "sale_price": null,
+    "short_description": "Pellame conciato al vegetale con impunture decorative della tradizione toscana.",
+    "image": "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=800&auto=format&fit=crop&q=80",
+    "sizes": [38, 39, 40, 41, 42],
+    "in_stock": true
+  },
+  {
+    "id": "prod-4",
+    "name": "Derby Piping Suola Cuoio",
+    "slug": "derby-piping-suola-cuoio",
+    "category": "Scarpe Eleganti",
+    "regular_price": 540.00,
+    "sale_price": null,
+    "short_description": "Profilo pulito ed essenziale con dettagli piping in rilievo.",
+    "image": "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=800&auto=format&fit=crop&q=80",
+    "sizes": [41, 42, 43, 44, 45],
+    "in_stock": true
+  }
+]

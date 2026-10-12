@@ -1,16 +1,115 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import EditorialCarouselRow from '../components/EditorialCarouselRow.astro';
+import EditorialSplitFeature from '../components/EditorialSplitFeature.astro';
+import EditorialTrioGrid from '../components/EditorialTrioGrid.astro';
+import LiveFeed from '../components/LiveFeed.astro';
+import MagazineFeature from '../components/MagazineFeature.astro';
+
+// Dati New In con slug sincronizzati
+const newInItems = [
+  { 
+    brand: "MERGE ATELIER", 
+    name: "Derby in Vitello Spazzolato", 
+    slug: "derby-in-vitello-spazzolato", 
+    price: 340, 
+    image: "https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=600&auto=format&fit=crop&q=80" 
+  },
+  { 
+    brand: "THE ROW EDIT", 
+    name: "Mocassino Penny Soft Leather", 
+    slug: "mocassino-penny-soft-leather", 
+    price: 620, 
+    image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=600&auto=format&fit=crop&q=80" 
+  },
+  { 
+    brand: "KHAITE", 
+    name: "Stivaletto Western Tacco Basso", 
+    slug: "stivaletto-western-tacco-basso", 
+    price: 810, 
+    image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600&auto=format&fit=crop&q=80" 
+  },
+  { 
+    brand: "LEMAIRE", 
+    name: "Derby Piping Suola Cuoio", 
+    slug: "derby-piping-suola-cuoio", 
+    price: 540, 
+    image: "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=600&auto=format&fit=crop&q=80" 
+  },
+];
+
+// Dati Suede Sensations con slug sincronizzati
+const suedeItems = [
+  { 
+    brand: "NOUR HAMMOUR", 
+    name: "Tronchetto Camoscio Cioccolato", 
+    slug: "stivaletto-western-tacco-basso", 
+    price: 690, 
+    image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600&auto=format&fit=crop&q=80" 
+  },
+  { 
+    brand: "BOTTEGA VENETA", 
+    name: "Sabot Intrecciato Suede", 
+    slug: "mocassino-penny-soft-leather", 
+    price: 920, 
+    image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=600&auto=format&fit=crop&q=80" 
+  },
+  { 
+    brand: "TOM FORD", 
+    name: "Sneaker Bassa Scamosciata", 
+    slug: "derby-in-vitello-spazzolato", 
+    price: 750, 
+    image: "https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=600&auto=format&fit=crop&q=80" 
+  },
+  { 
+    brand: "STOULS", 
+    name: "Chelsea Boot Velour", 
+    slug: "derby-piping-suola-cuoio", 
+    price: 480, 
+    image: "https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=600&auto=format&fit=crop&q=80" 
+  },
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Home">
+  <Hero />
+
+  <EditorialCarouselRow 
+    counter="148 NUOVI MODELLI"
+    title="New In"
+    description="Nuove uscite sartoriali aggiunte ogni settimana: scopri le ultime creazioni Merge Luxury."
+    ctaText="Shop New In"
+    items={newInItems}
+  />
+
+  <EditorialSplitFeature 
+    left={{
+      title: "The Essential Loafer",
+      subtitle: "Calzata avvolgente e guardolo cucito a mano per l'eleganza quotidiana.",
+      image: "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=1000&auto=format&fit=crop&q=85",
+      linkText: "Shop the edit",
+      linkHref: "/products/mocassino-penny-soft-leather"
+    }}
+    right={{
+      title: "Boot Camp",
+      subtitle: "Gli stivali texani e i cuissard guidano il guardaroba della nuova stagione.",
+      image: "https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=1000&auto=format&fit=crop&q=85",
+      linkText: "Shop boots",
+      linkHref: "/products/stivaletto-western-tacco-basso"
+    }}
+  />
+
+  <EditorialCarouselRow 
+    title="Suede sensations"
+    description="I nuovi modelli nella texture più sofisticata e morbida della stagione."
+    ctaText="Shop the edit"
+    items={suedeItems}
+  />
+
+  <EditorialTrioGrid />
+
+  <LiveFeed />
+
+  <MagazineFeature />
+</BaseLayout>
